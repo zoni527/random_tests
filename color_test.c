@@ -34,7 +34,7 @@ enum e_channel_type
 	R,
 };
 
-# else
+#else
 
 typedef struct s_channels
 {
@@ -54,14 +54,14 @@ enum e_channel_type
 
 #endif
 
-typedef union	u_8bit_color
+typedef union u_8bit_color
 {
 	uint32_t	rgba;
 	t_channels	channel;
 	uint8_t		ch[4];
 }	t_8bit_color;
 
-typedef struct	s_float_color
+typedef struct s_float_color
 {
 	float	r;
 	float	g;
@@ -133,17 +133,21 @@ int	main(int argc, char *argv[])
 
 	ft_bzero(&c, sizeof(t_8bit_color));
 	if (argc == 2)
+	{
 		c.rgba = ft_atohex(argv[1]);
+		if (c.rgba <= 0xffffff)
+			c.rgba = (c.rgba << 8) | 0x000000ff;
+	}
 	f = color_8bit_to_float(c);
 	ft_printf("\nrgba in hex:		0x%x\n\n", c.rgba);
-	ft_printf("channel.r:			%u\n", c.channel.r);
-	ft_printf("channel.g:			%u\n", c.channel.g);
-	ft_printf("channel.b:			%u\n", c.channel.b);
-	ft_printf("channel.a:			%u\n\n", c.channel.a);
-	ft_printf("ch[R]:				%x\n", c.ch[R]);
-	ft_printf("ch[G]:				%x\n", c.ch[G]);
-	ft_printf("ch[B]:				%x\n", c.ch[B]);
-	ft_printf("ch[A]:				%x\n\n", c.ch[A]);
+	ft_printf("channel.r:		%u\n", c.channel.r);
+	ft_printf("channel.g:		%u\n", c.channel.g);
+	ft_printf("channel.b:		%u\n", c.channel.b);
+	ft_printf("channel.a:		%u\n\n", c.channel.a);
+	ft_printf("ch[R]:			%x\n", c.ch[R]);
+	ft_printf("ch[G]:			%x\n", c.ch[G]);
+	ft_printf("ch[B]:			%x\n", c.ch[B]);
+	ft_printf("ch[A]:			%x\n\n", c.ch[A]);
 	ft_printf ("red bitshifted:		%x\n", (c.rgba >> 24) & 0x000000ff);
 	ft_printf ("blue bitshifted:	%x\n", (c.rgba >> 16) & 0x000000ff);
 	ft_printf ("green bitshifted:	%x\n", (c.rgba >> 8) & 0x000000ff);
